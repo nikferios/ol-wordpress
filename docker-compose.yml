@@ -1,13 +1,15 @@
 version: '2'
 services:
   app:
-    mem_limit: ${APP_MEM_LIMIT}
     image: overlogic/overpress:${OVERPRESS_IMAGE}
     deploy:
       placement:
         constraints:
          - "node.type==${NODE_TYPE}"
          - "node.app==${NODE_APP}"
+     resources:
+       limits:
+         memory: ${APP_MEM_LIMIT}
     volumes:
     - app:/var/www/html
     environment:
@@ -19,13 +21,15 @@ services:
     links:
     - db:mysql
   db:
-    mem_limit: ${DB_MEM_LIMIT}
     image: mariadb:${MARIADB_IMAGE}
     deploy:
       placement:
         constraints:
          - "node.type==${NODE_TYPE}"
          - "node.app==${NODE_APP}"
+     resources:
+       limits:
+         memory: ${DB_MEM_LIMIT}
     volumes:
     - db:/var/lib/mysql
     environment:
