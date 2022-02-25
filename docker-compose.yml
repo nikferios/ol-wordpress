@@ -29,7 +29,7 @@ services:
     volumes:
     - db:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: !Str0ngP@ssword%
+      MYSQL_ROOT_PASSWORD: "!Str0ngP@ssword%"
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
