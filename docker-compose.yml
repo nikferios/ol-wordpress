@@ -1,17 +1,18 @@
-version: '2'
+version: '3'
+
 services:
   app:
     image: overlogic/overpress:${OVERPRESS_IMAGE}
     deploy:
       placement:
         constraints:
-         - "node.type==${NODE_TYPE}"
-         - "node.app==${NODE_APP}"
-     resources:
-       limits:
-         memory: ${APP_MEM_LIMIT}
+          - "node.type==${NODE_TYPE}"
+          - "node.app==${NODE_APP}"
+      resources:
+        limits:
+          memory: ${APP_MEM_LIMIT}
     volumes:
-    - app:/var/www/html
+      - app:/var/www/html
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: ${DB_NAME}
@@ -19,19 +20,19 @@ services:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
       WORDPRESS_MEMORY_LIMIT: ${WP_MEM_LIMIT}
     links:
-    - db:mysql
+      - db:mysql
   db:
     image: mariadb:${MARIADB_IMAGE}
     deploy:
       placement:
         constraints:
-         - "node.type==${NODE_TYPE}"
-         - "node.app==${NODE_APP}"
-     resources:
-       limits:
-         memory: ${DB_MEM_LIMIT}
+          - "node.type==${NODE_TYPE}"
+          - "node.app==${NODE_APP}"
+        resources:
+          limits:
+            memory: ${DB_MEM_LIMIT}
     volumes:
-    - db:/var/lib/mysql
+      - db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "!Str0ngP@ssword%"
       MYSQL_DATABASE: ${DB_NAME}
@@ -43,16 +44,22 @@ services:
     deploy:
       placement:
         constraints:
-         - "node.type==${NODE_TYPE}"
-         - "node.app==${NODE_APP}"
+          - "node.type==${NODE_TYPE}"
+          - "node.app==${NODE_APP}"
     volumes:
-    - ./nginx/ol_op_nginx.conf:/etc/nginx/nginx.conf:ro
-    - ./nginx/conf.d/:/etc/nginx/conf.d/
-    - app:/var/www/html
+      - ./nginx/ol_op_nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - app:/var/www/html
     links:
-    - app
+      - app
     ports:
-    - 80
+      - 80
+
 volumes:
   db:
   app:
+
+networks:
+  proxy-tier:
+    external:
+      name: npm_npm-net
