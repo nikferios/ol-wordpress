@@ -39,7 +39,7 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
   web:
-    hostname: ${HOSTNAME}
+    container_name: ${HOSTNAME}
     image: nginx:${NGINX_IMAGE}
     deploy:
       placement:
