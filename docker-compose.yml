@@ -52,6 +52,7 @@ services:
       - app:/var/www/html
     networks:
       - proxy-tier
+      - default
     links:
       - app
     ports:
