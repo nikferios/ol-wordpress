@@ -28,9 +28,9 @@ services:
         constraints:
           - "node.type==${NODE_TYPE}"
           - "node.app==${NODE_APP}"
-        resources:
-          limits:
-            memory: ${DB_MEM_LIMIT}
+      resources:
+        limits:
+          memory: ${DB_MEM_LIMIT}
     volumes:
       - db:/var/lib/mysql
     environment:
